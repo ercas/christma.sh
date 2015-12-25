@@ -52,7 +52,7 @@ tput civis
 mkdir -p $frames
 
 echo "Downloading frames..."
-grab "$framesUrl" $tmpdir/framesArchive.tar.gz
+grab "$framesUrl" $tmpdir/framesArchive
 
 echo "Decompressing frames..."
 tar -xzf $tmpdir/framesArchive -C $frames
