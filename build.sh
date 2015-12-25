@@ -18,4 +18,4 @@ for frame in $(seq 0 $(($loops*4))); do
     fi
 done
 
-tar -Jcf frames.tar.xz frames
+tar -zcf frames.tar.gz frames

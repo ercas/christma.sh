@@ -19,7 +19,9 @@ how to make your own animations
 ===============================
 remember, all you need is christma.sh!
 
-* upload a compatible audio file (.ogg recommended) to somewhere and set this as audioUrl.
+* upload a compatible audio file (.ogg recommended) to somewhere and set this as audioOgg.
+* also upload a .wav, broken into parts if necessary, to somewhere add the urls to the audioWavUrls array if you want to support linux's aplay. if you don't, remove the aplay check.
+* also upload a .mp3 to somewhere and set this as audioMp3 if you want to support os x's afplay. if you don't, remove the afplay check.
 * create the ascii art frames. the frames should be numbered 0, 1, 2, 3, etc; do not prepend zeroes to the numbers (ex. 00, 01, 02, 03, etc).
 * compress the frames into a .tar.xz and upload this to somewhere. set this as framesUrl
 * done! distribute the edited christma.sh. you might want to do some rebranding to make it less festive, too.

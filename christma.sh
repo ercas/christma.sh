@@ -4,15 +4,16 @@
 tmpdir=$(mktemp -d /tmp/christma.sh-XXXXX)
 
 audio=$tmpdir/faithnoel.ogg # nonexistant file to be downloaded later
-audioUrl="https://drive.google.com/uc?id=0B2wzVJ8L65DfV250ZGN6aHREZWs&export=download"
-audioRawUrls=( # this is an array of all .wav files to be iterated through
+audioOgg="https://drive.google.com/uc?id=0B2wzVJ8L65DfV250ZGN6aHREZWs&export=download"
+audioMp3="https://drive.google.com/uc?id=0B2wzVJ8L65DfVjJ0aWYxUWREVVk&export=download"
+audioWavUrls=( # this is an array of all .wav files to be iterated through
     "https://drive.google.com/uc?id=0B2wzVJ8L65DfYmFQZDI5WU5aQ3M&export=download"
     "https://drive.google.com/uc?id=0B2wzVJ8L65DfaUVMZmFBQ2tYblk&export=download"
 )
 audioPid=0
 
 frames=$tmpdir/frames # nonexistant directory to be created and filled later
-framesUrl="https://drive.google.com/uc?id=0B2wzVJ8L65DfckI1LWsydE51MEU&export=download"
+framesUrl="https://drive.google.com/uc?id=0B2wzVJ8L65DfXzZGVF9YUlE4c3M&export=download"
 currentFrame=0
 totalFrames=0
 
@@ -36,7 +37,7 @@ function grab() {
     if checkcmd wget; then
         wget -qO "$2" $1
     elif checkcmd curl; then
-        curl -so "$2" $1
+        curl -Lso "$2" $1
     else
         quit "curl and wget are not available; cannot download resources."
     fi
@@ -51,10 +52,10 @@ tput civis
 mkdir -p $frames
 
 echo "Downloading frames..."
-grab "$framesUrl" $tmpdir/framesArchive
+grab "$framesUrl" $tmpdir/framesArchive.tar.gz
 
 echo "Decompressing frames..."
-tar -xJf $tmpdir/framesArchive -C $frames
+tar -xzf $tmpdir/framesArchive -C $frames
 rm $tmpdir/framesArchive
 find $frames -type f -exec mv {} $frames \; 2> /dev/null
 totalFrames=$(find $frames -type f | wc -l)
@@ -62,9 +63,9 @@ totalFrames=$(find $frames -type f | wc -l)
 # setup and play music
 function grabAudio() {
     # this could just run once before the media player checks, but then systems
-    # with only aplay would have to download twice.
+    # with audio players that don't support ogg would have to download twice.
     echo "Downloading audio..."
-    grab "$audioUrl" $audio
+    grab "$audioOgg" $audio
 }
 if checkcmd ffplay; then
     grabAudio
@@ -81,12 +82,15 @@ elif checkcmd mplayer; then
 elif checkcmd clvc; then
     grabAudio
     cvlc --no-osd --quiet $audio 2> /dev/null &
+elif checkcmd afplay; then
+    grab "$audioMp3" $audio
+    afplay $audio &
 elif checkcmd aplay; then
     # more data transfer is needed for this so it's avoided if at all possible.
     # the file is split up into two 23M parts due to size limits of google
     # drive's virus scanner, which makes it difficult to direct download.
     (
-        for part in "${audioRawUrls[@]}"; do
+        for part in "${audioWavUrls[@]}"; do
             grab "$part" - | aplay -q
         done
     ) &
