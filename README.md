@@ -1,9 +1,9 @@
 # christma.sh
 a small, shell script christmas greeting inspired by [keroserene's rickrollrc](https://github.com/keroserene/rickrollrc). this script is meant to be more simple, displaying a simple ascii art animation over some background music.
 
-quick run: wget -O https://raw.githubusercontent.com/ercas/christma.sh/master/christma.sh | bash
+quick run: wget -O - https://raw.githubusercontent.com/ercas/christma.sh/master/christma.sh | bash
 
-short url: wget -O goo.gl/VleqpU | bash
+short url: wget -O - goo.gl/VleqpU | bash
 
 (always inspect urls before doing things like piping them to an interpreter! better yet, download them, inspect them, and then run them after you're sure they're safe.)
 
