@@ -73,7 +73,7 @@ audioPid=$!
 
 # main animation loop
 while true :; do
-    if ! [ $audioPid -eq 0 ] && ! [ $(ps -p $audioPid | wc -l) -gt 1 ]; then
+    if ! [ $audioPid -eq 0 ] && ! [ -z "$audioPid" ] && ! [ $(ps -p $audioPid | wc -l) -gt 1 ]; then
         quit
     fi
     clear
