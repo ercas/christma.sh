@@ -3,7 +3,7 @@
 
 tmpdir=$(mktemp -d /tmp/christma.sh-XXXXX)
 
-audio=$tmpdir/faithnoel.ogg # nonexistant file to be downloaded later
+audio=$tmpdir/faithnoel # nonexistant file to be downloaded later
 audioOgg="https://drive.google.com/uc?id=0B2wzVJ8L65DfV250ZGN6aHREZWs&export=download"
 audioMp3="https://drive.google.com/uc?id=0B2wzVJ8L65DfVjJ0aWYxUWREVVk&export=download"
 audioWavUrls=( # this is an array of all .wav files to be iterated through
